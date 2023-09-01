@@ -1,4 +1,26 @@
-# <center> Banco de Dados II </center>
+## Instalações necessárias
+```bash
+npm init
+```
+```bash
+npm install --save sequelize
+```
+```bash
+npm install --save mysql2
+```
+```bash
+npm i dotenv
+```
+```bash
+npm install prompt-sync
+```
+## Importante
+* Altere o arquivo `.env.example` e renomeie-o para `.env` 
+
+<br>
+
+## Enunciado
+
 ### <center> Atividade ORM a partir de modelo de dado existente </center><br>
 
 Considerando o arquivo de dados disponibilizado em formato .csv (people-
