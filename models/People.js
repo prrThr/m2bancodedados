@@ -4,36 +4,46 @@ const sequelize = require('../config/database');
 const People = sequelize.define('People', {
     index: { 
         type: DataTypes.TINYINT,
-        autoIncrement: true },
+        autoIncrement: true 
+     },
 
     userId: { type: DataTypes.STRING,
          allowNull: false,
-         primaryKey: true },
+         primaryKey: true 
+     },
 
     firstName: { type: DataTypes.STRING,
-         allowNull: false },
+         allowNull: false 
+     },
 
     lastName: { type: DataTypes.STRING,
-         allowNull: false },
+         allowNull: false 
+     },
 
     sex: { type: DataTypes.STRING,
-         allowNull: false },
+         allowNull: false 
+     },
 
     email: { type: DataTypes.STRING,
-         allowNull: false },
+         allowNull: false 
+     },
 
     phone: { type: DataTypes.STRING,
-         allowNull: false },
+         allowNull: false 
+     },
 
     dateOfBirth: { type: DataTypes.DATE,
-         allowNull: false },
+         allowNull: false 
+     },
 
     jobTitle: { type: DataTypes.STRING,
-         allowNull: false },
+         allowNull: false 
+     },
 
-},
+
+     },
  { tableName: 'People', timestamps: false });
 
-Table.sync();
+People.sync();
 
 module.exports = People;

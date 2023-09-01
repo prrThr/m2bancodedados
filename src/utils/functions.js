@@ -5,11 +5,14 @@ async function importarDados() {
     const readline = require('readline');
     const filePath = 'people-100000.xlsx';
     const fileStream = fs.createReadStream(filePath);
+    
     const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity // Detecta automaticamente a quebra de linha (CR+LF ou LF)
     });
+
     let primeiraLinha = true;
+    
     rl.on('line', async (line) => {
       if (primeiraLinha){
         primeiraLinha = false;
@@ -35,7 +38,7 @@ async function importarDados() {
         dateOfBirth: nascimento,
         jobTitle: profissao};
         
-        let returnedObject = await Table.create(person);
+        let returnedObject = await People.create(person);
         let generatedKey = returnedObject.dataValues.index;
         console.log("Sucesso! Generated key", generatedKey);
   

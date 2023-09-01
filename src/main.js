@@ -4,6 +4,8 @@ const functions = require('./utils/functions');
 
 // ---------------------------------------------- //
 
+functions.importarDados();
+
 async function main() {
   let option = 0;
 
@@ -58,5 +60,3 @@ async function main() {
 }
 
 //main();
-testConnection();
-//importarDados();
