@@ -1,5 +1,5 @@
 const prompt = require('prompt-sync')({ sigint: true });
-const functions = require('./src/utils/functions');
+const functions = require('./utils/functions');
 //Criar tabela com as colunas: Index, UserId, FirstName, LastName, Sex, Email, Phone, DateBirth, Job Title
 
 // ---------------------------------------------- //
@@ -57,6 +57,6 @@ async function main() {
   }
 }
 
-main();
+//main();
 testConnection();
-importarDados();
+//importarDados();
