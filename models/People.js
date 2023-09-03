@@ -3,14 +3,14 @@ const sequelize = require('../config/database');
 
 const People = sequelize.define('People', {
      index: {
-          type: DataTypes.TINYINT
-          
+          type: DataTypes.TINYINT,
+          autoIncrement: true,
+          primaryKey: true
      },
 
      userId: {
           type: DataTypes.STRING,
           allowNull: false,
-          primaryKey: true
      },
 
      firstName: {
@@ -39,7 +39,7 @@ const People = sequelize.define('People', {
      },
 
      dateOfBirth: {
-          type: DataTypes.DATE,
+          type: DataTypes.STRING,
           allowNull: false
      },
 

@@ -1,10 +1,10 @@
 const People = require('../../models/People');
-
+const fs = require('fs');
+const csv = require('csv-parser');
+const filePath = 'src/utils/people-100000.csv';
 
 async function importarDados() {
-  const fs = require('fs');
   const readline = require('readline');
-  const filePath = 'src/utils/people-100000.csv';
   const fileStream = fs.createReadStream(filePath);
 
   const rl = readline.createInterface({
@@ -42,7 +42,7 @@ async function importarDados() {
 
     let returnedObject = await People.create(person);
     let generatedKey = returnedObject.dataValues.index;
-    console.log("Sucesso! Generated key", generatedKey);
+    //console.log("Sucesso! Generated key", generatedKey);
 
     console.log('Linha:', line);
   });
@@ -63,8 +63,56 @@ async function mostrarDados() {
 async function PesquisarDados() {
 }
 
+// 'src/utils/people-100000.csv'
+
+async function importCSV() {
+  
+
+  const fileContents = fs.readFileSync(filePath, 'utf8');
+  const lines = fileContents.split('\n');
+
+  const numLinesToProcess = 30; // Defina o número de linhas que deseja processar
+  //for (const line of lines) {
+  for (let i = 0; i < numLinesToProcess && i < lines.length; i++) {
+  const line = lines[i];  
+  
+  const [
+      index,
+      userId,
+      firstName,
+      lastName,
+      sex,
+      email,
+      phone,
+      dateOfBirth,
+      jobTitle,
+    ] = line.split(',');
+
+    if (index === 'Index') {
+      // Esta é a linha de cabeçalho, pule-a
+      continue;
+    }
+
+    await People.create({
+      userId,
+      firstName,
+      lastName,
+      sex,
+      email,
+      phone,
+      dateOfBirth,
+      jobTitle,
+    });
+
+    console.log(`Dados importados para ${firstName} ${lastName}`);
+  }
+
+  console.log('Importação concluída.');
+}
+
 module.exports = {
   importarDados,
   mostrarDados,
-  PesquisarDados
+  PesquisarDados,
+  importCSV
 }

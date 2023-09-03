@@ -1,10 +1,18 @@
 const prompt = require('prompt-sync')({ sigint: true });
 const functions = require('./utils/functions');
+const sequelize = require('../config/database');
 //Criar tabela com as colunas: Index, UserId, FirstName, LastName, Sex, Email, Phone, DateBirth, Job Title
 
 // ---------------------------------------------- //
 
-functions.importarDados();
+//functions.importarDados();
+//functions.importCSV();
+
+
+sequelize.sync().then(() => {
+    functions.importCSV();
+  });
+  
 
 async function main() {
   let option = 0;
