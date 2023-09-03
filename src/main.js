@@ -5,12 +5,9 @@ const sequelize = require('../config/database');
 
 // ---------------------------------------------- //
 
-//functions.importarDados();
-//functions.importCSV();
-
 
 sequelize.sync().then(() => {
-    functions.importCSV();
+    functions.importarDados();
   });
   
 

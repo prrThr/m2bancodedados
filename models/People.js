@@ -39,7 +39,7 @@ const People = sequelize.define('People', {
      },
 
      dateOfBirth: {
-          type: DataTypes.STRING,
+          type: DataTypes.DATEONLY,
           allowNull: false
      },
 
