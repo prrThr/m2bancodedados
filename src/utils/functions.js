@@ -73,7 +73,7 @@ async function importCSV() {
 
   const numLinesToProcess = 30; // Defina o número de linhas que deseja processar
   //for (const line of lines) {
-  for (let i = 0; i < numLinesToProcess && i < lines.length; i++) {
+  for (let i = 1; i < numLinesToProcess && i < lines.length; i++) {
   const line = lines[i];  
   
   const [
@@ -93,6 +93,8 @@ async function importCSV() {
       continue;
     }
 
+    const cleanedJobTitle = jobTitle.replace(/"/g, '');
+
     await People.create({
       userId,
       firstName,
@@ -101,7 +103,7 @@ async function importCSV() {
       email,
       phone,
       dateOfBirth,
-      jobTitle,
+      jobTitle: cleanedJobTitle,
     });
 
     console.log(`Dados importados para ${firstName} ${lastName}`);
