@@ -1,21 +1,41 @@
 const { Op } = require('sequelize');
 const Person = require('../../models/Person');
-const sequelize = require('../../config/database');
 const prompt = require('prompt-sync')({sigint: true});
+const { alignText, filledTable } = require('./auxiliaryFunctions');
 
 
-async function mostrarDados() {
+async function mostrarDados(tableState) {
+
+  if (!filledTable(tableState)) {
+    return;
+  }
+
   let people = await Person.findAll();
-  for (const person of people) {
-    try { // Preencher com todos os atributos
-      console.log(`Index: ${person.index} | Name: ${person.firstName} ${person.lastName}`);
+  people.forEach( ppl => {
+    try {
+      const formattedIndex = alignText(ppl.index.toString(), 3);
+      const formattedUserID = alignText(ppl.userId.toString(), 17);
+      const formattedFirstName = alignText(ppl.firstName.toString(), 11);
+      const formattedLastName = alignText(ppl.lastName.toString(), 11);
+      const formattedSex = alignText(ppl.sex.toString(), 7);
+      const formattedEmail = alignText(ppl.email.toString(), 34);
+      const formattedPhone = alignText(ppl.phone.toString(), 24);
+      const formattedDateOfBirth = alignText(ppl.dateOfBirth.toString(), 12);
+      
+      console.log(`${formattedIndex} | ${formattedUserID} | ${formattedFirstName} | ${formattedLastName} | ${formattedSex} | ${formattedEmail} | ${formattedPhone} | ${formattedDateOfBirth} | ${ppl.jobTitle}`)  
     } catch (error) {
       console.log("Error log: ", error);
     }
-  };
+  });
+  
 }
 
-async function PesquisarDados() {
+async function PesquisarDados(tableState) {
+
+  if (!filledTable(tableState)) {
+    return;
+  }
+  
   let findName = prompt("Digite o nome que deseja persquisar: ");
 
   let people = await Person.findAll({
@@ -27,27 +47,42 @@ async function PesquisarDados() {
     }
   });
 
-  for (const person of people){
-    try { // Preencher com todos os atributos
-      console.log(`Index: ${person.index} | Name: ${person.firstName} ${person.lastName}`);
+  people.forEach( ppl => {
+    try {
+      const formattedIndex = alignText(ppl.index.toString(), 3);
+      const formattedUserID = alignText(ppl.userId.toString(), 17);
+      const formattedFirstName = alignText(ppl.firstName.toString(), 11);
+      const formattedLastName = alignText(ppl.lastName.toString(), 11);
+      const formattedSex = alignText(ppl.sex.toString(), 7);
+      const formattedEmail = alignText(ppl.email.toString(), 34);
+      const formattedPhone = alignText(ppl.phone.toString(), 24);
+      const formattedDateOfBirth = alignText(ppl.dateOfBirth.toString(), 12);
+      
+      console.log(`${formattedIndex} | ${formattedUserID} | ${formattedFirstName} | ${formattedLastName} | ${formattedSex} | ${formattedEmail} | ${formattedPhone} | ${formattedDateOfBirth} | ${ppl.jobTitle}`)  
     } catch (error) {
       console.log("Error log: ", error);
     }
-  }
+  });
 }
 
 
 
 async function importarDados() {
+
+  try {
+    await Person.sync();
+    console.log("Tabela sincronizada com sucesso.");
+  } catch (error) {
+    console.log("Erro ao sincronizar tabela: ", error);
+  }
+
   const fs = require('fs');
   const filePath = 'resource/people-100000.csv';
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const lines = fileContents.split('\n');
 
-  // Utilizando 30 linhas do csv apenas para testar o funcionamento.
-  // Quando estiver tudo funcionando perfeitamente, alterar para percorrer o arquivo inteiro.
   const numLinesToProcess = 1000; // Defina o número de linhas que deseja processar
-  //for (const line of lines) {
+  //for (const line of lines) {  // Remover "//" desta linha caso deseje percorrer o arquivo inteiro
   for (let i = 1; i < numLinesToProcess && i < lines.length; i++) {
   const line = lines[i];  
   
@@ -87,29 +122,9 @@ async function importarDados() {
   console.log('Importação concluída.');
 }
 
-async function verificarTabela (table) { // Alterar para process.env.DATABASE;
-
-  try {
-    const AllTables = await sequelize.getQueryInterface().showAllTables();
-
-    if (AllTables.includes(table)){
-      const count = await table.count( { where: {} } );
-      if (count === 0) {
-        return "vazia"
-      } else {
-        return "preenchida"
-      }
-    } else {
-      return "inexistente";
-    }
-  } catch (error) {
-    console.log(`Erro ao verificar tabela ${table}: `, error);
-  }
-}
 
 module.exports = {
   importarDados,
   mostrarDados,
-  PesquisarDados,
-  verificarTabela
+  PesquisarDados
 }
