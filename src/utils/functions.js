@@ -17,8 +17,13 @@ async function PesquisarDados() {
   let findName = prompt("Digite o nome que deseja persquisar: ");
 
   let people = await Person.findAll({
-    where: { firstName: {[Op.like]: findName }}
-  })
+    where: {
+      [Op.or]: [
+        { firstName: { [Op.like]: `%${findName}%` } },
+        { lastName: { [Op.like]: `%${findName}` } }
+      ]
+    }
+  });
 
   for (const person of people){
     try { // Preencher com todos os atributos
