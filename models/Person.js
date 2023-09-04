@@ -3,7 +3,7 @@ const sequelize = require('../config/database');
 
 const Person = sequelize.define('Person', {
      index: {
-          type: DataTypes.TINYINT,
+          type: DataTypes.INTEGER,
           autoIncrement: true,
           primaryKey: true
      },

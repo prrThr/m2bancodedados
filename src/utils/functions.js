@@ -1,30 +1,45 @@
+const { Op } = require('sequelize');
 const Person = require('../../models/Person');
-const fs = require('fs');
-const filePath = 'resource/people-100000.csv';
-
+const prompt = require('prompt-sync')({sigint: true});
 
 async function mostrarDados() {
   let people = await Person.findAll();
   for (const person of people) {
-    const selectedStore1 = await Store.findByPk(person.store_id, { logging: false });
-    console.log()
+    try { // Preencher com todos os atributos
+      console.log(`Index: ${person.index} | Name: ${person.firstName} ${person.lastName}`);
+    } catch (error) {
+      console.log("Error log: ", error);
+    }
   };
 }
 
 async function PesquisarDados() {
+  let findName = prompt("Digite o nome que deseja persquisar: ");
+
+  let people = await Person.findAll({
+    where: { firstName: {[Op.like]: findName }}
+  })
+
+  for (const person of people){
+    try { // Preencher com todos os atributos
+      console.log(`Index: ${person.index} | Name: ${person.firstName} ${person.lastName}`);
+    } catch (error) {
+      console.log("Error log: ", error);
+    }
+  }
 }
 
 
 
 async function importarDados() {
-  
-
+  const fs = require('fs');
+  const filePath = 'resource/people-100000.csv';
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const lines = fileContents.split('\n');
 
   // Utilizando 30 linhas do csv apenas para testar o funcionamento.
   // Quando estiver tudo funcionando perfeitamente, alterar para percorrer o arquivo inteiro.
-  const numLinesToProcess = 30; // Defina o número de linhas que deseja processar
+  const numLinesToProcess = 1000; // Defina o número de linhas que deseja processar
   //for (const line of lines) {
   for (let i = 1; i < numLinesToProcess && i < lines.length; i++) {
   const line = lines[i];  
@@ -48,7 +63,7 @@ async function importarDados() {
 
     const cleanedJobTitle = jobTitle.replace(/"/g, '');
 
-    await People.create({
+    await Person.create({
       userId,
       firstName,
       lastName,

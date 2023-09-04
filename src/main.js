@@ -5,10 +5,11 @@ const sequelize = require('../config/database');
 
 // ---------------------------------------------- //
 
+//TODO: Adicionar "logging: false" na configuração
 
 //sequelize.sync().then(() => {
 //    functions.importarDados();
-//  });
+//});
   
 
 async function main() {
