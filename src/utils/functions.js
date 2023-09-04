@@ -47,6 +47,11 @@ async function PesquisarDados(tableState) {
     }
   });
 
+  if (people.length === 0) {
+    console.log(`Não foi encontrado nenhum registro com o nome ${findName} na tabela.`);
+    return;
+  }
+
   people.forEach( ppl => {
     try {
       const formattedIndex = alignText(ppl.index.toString(), 3);
@@ -81,7 +86,7 @@ async function importarDados() {
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const lines = fileContents.split('\n');
 
-  const numLinesToProcess = 1000; // Defina o número de linhas que deseja processar
+  const numLinesToProcess = 1000; // Número de linhas serão lidas
   //for (const line of lines) {  // Remover "//" desta linha caso deseje percorrer o arquivo inteiro
   for (let i = 1; i < numLinesToProcess && i < lines.length; i++) {
   const line = lines[i];  
@@ -97,11 +102,6 @@ async function importarDados() {
       dateOfBirth,
       jobTitle,
     ] = line.split(',');
-
-    if (index === 'Index') { // Talvez dê para remover poís a iteração já começa do 1 (segunda linha)
-      // Esta é a linha de cabeçalho, pule-a
-      continue;
-    }
 
     const cleanedJobTitle = jobTitle.replace(/"/g, '');
 

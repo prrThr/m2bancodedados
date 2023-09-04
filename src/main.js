@@ -1,4 +1,3 @@
-const sequelize = require('../config/database');
 const prompt = require('prompt-sync')({ sigint: true });
 const { importarDados, mostrarDados, PesquisarDados } = require('./utils/functions');
 const { checkTableState } = require('./utils/auxiliaryFunctions');
@@ -63,7 +62,6 @@ async function main() {
 
             case 5:
                 console.log("Saindo...");
-                // await sequelize.close();  Algo ainda continua rodando após executar esta linha
                 break;
 
             // ------------------------------------------------------- //
@@ -75,10 +73,3 @@ async function main() {
 }
 
 main();
-
-async function teste() {
-    const AllTables = await sequelize.getQueryInterface().showAllTables();
-    console.log(AllTables);
-}
-//teste();
-
