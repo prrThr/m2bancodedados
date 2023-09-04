@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const People = sequelize.define('People', {
+const Person = sequelize.define('Person', {
      index: {
           type: DataTypes.TINYINT,
           autoIncrement: true,
@@ -50,8 +50,11 @@ const People = sequelize.define('People', {
 
 
 },
-     { tableName: 'People', timestamps: false });
+     { 
+          tableName: 'Person',
+          timestamps: false
+     });
 
-People.sync();
+Person.sync();
 
-module.exports = People;
+module.exports = Person;

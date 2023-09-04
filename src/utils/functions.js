@@ -1,12 +1,12 @@
-const People = require('../../models/People');
+const Person = require('../../models/Person');
 const fs = require('fs');
 const filePath = 'resource/people-100000.csv';
 
 
 async function mostrarDados() {
-  let customers = await Customer.findAll();
-  for (const customer of customers) {
-    const selectedStore1 = await Store.findByPk(customer.store_id, { logging: false });
+  let people = await Person.findAll();
+  for (const person of people) {
+    const selectedStore1 = await Store.findByPk(person.store_id, { logging: false });
     console.log()
   };
 }
@@ -41,7 +41,7 @@ async function importarDados() {
       jobTitle,
     ] = line.split(',');
 
-    if (index === 'Index') {
+    if (index === 'Index') { // Talvez dê para remover poís a iteração já começa do 1 (segunda linha)
       // Esta é a linha de cabeçalho, pule-a
       continue;
     }
@@ -61,7 +61,7 @@ async function importarDados() {
 
     console.log(`Dados importados para ${firstName} ${lastName}`);
   }
-
+  
   console.log('Importação concluída.');
 }
 

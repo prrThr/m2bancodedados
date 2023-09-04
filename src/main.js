@@ -6,17 +6,17 @@ const sequelize = require('../config/database');
 // ---------------------------------------------- //
 
 
-sequelize.sync().then(() => {
-    functions.importarDados();
-  });
+//sequelize.sync().then(() => {
+//    functions.importarDados();
+//  });
   
 
 async function main() {
   let option = 0;
 
-  while (option != 8) {
+  while (option != 4) {
       option = 0;
-      while(option < 1 || option > 8) {
+      while(option < 1 || option > 4) {
           console.log("---Menu---")
           console.log("1 - Mostrar todos os dados")
           console.log("2 - Pesquisar dados")
@@ -64,4 +64,4 @@ async function main() {
   }
 }
 
-//main();
+main();
