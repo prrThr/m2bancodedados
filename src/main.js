@@ -5,24 +5,27 @@ const sequelize = require('../config/database');
 
 // ---------------------------------------------- //
 
-//TODO: Adicionar "logging: false" na configuração
+//TODO:
+//  * Arrumar função verificarTabela()
+//  * Adicionar "logging: false" na configuração
+//  * Completar as colunas nas funções
 
-//sequelize.sync().then(() => {
-//    functions.importarDados();
-//});
-  
+let tableState;
 
 async function main() {
   let option = 0;
 
-  while (option != 4) {
+  tableState = functions.verificarTabela("m1db2");
+
+  while (option != 5) {
       option = 0;
-      while(option < 1 || option > 4) {
-          console.log("---Menu---")
+      while(option < 1 || option > 5) {
+          console.log(`--- Estado da tabela: ${tableState} ---`)
           console.log("1 - Mostrar todos os dados")
           console.log("2 - Pesquisar dados")
           console.log('3 - Limpar tela');
-          console.log('4 - Sair');
+          console.log('4 - Importar dados');
+          console.log('5 - Sair');
           option = parseInt(prompt('Selecione uma opção: '));
       }
       
@@ -54,6 +57,17 @@ async function main() {
           // ------------------------------------------------------- //
 
           case 4:
+              try {
+                functions.importarDados();
+                emptyTable = true;
+              } catch (error) {
+                console.log("Erro ao importar dados: ", error);
+              }
+              break;
+          
+          // ------------------------------------------------------- //
+          
+          case 5:
               console.log('Saindo...');
               break;
           

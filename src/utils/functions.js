@@ -1,6 +1,8 @@
 const { Op } = require('sequelize');
 const Person = require('../../models/Person');
+const sequelize = require('../../config/database');
 const prompt = require('prompt-sync')({sigint: true});
+
 
 async function mostrarDados() {
   let people = await Person.findAll();
@@ -85,8 +87,29 @@ async function importarDados() {
   console.log('Importação concluída.');
 }
 
+async function verificarTabela (table) { // Alterar para process.env.DATABASE;
+
+  try {
+    const AllTables = await sequelize.getQueryInterface().showAllTables();
+
+    if (AllTables.includes(table)){
+      const count = await table.count( { where: {} } );
+      if (count === 0) {
+        return "vazia"
+      } else {
+        return "preenchida"
+      }
+    } else {
+      return "inexistente";
+    }
+  } catch (error) {
+    console.log(`Erro ao verificar tabela ${table}: `, error);
+  }
+}
+
 module.exports = {
   importarDados,
   mostrarDados,
   PesquisarDados,
+  verificarTabela
 }
