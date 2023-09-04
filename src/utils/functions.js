@@ -1,6 +1,6 @@
 const People = require('../../models/People');
 const fs = require('fs');
-const filePath = 'src/utils/people-100000.csv';
+const filePath = 'resource/people-100000.csv';
 
 
 async function mostrarDados() {
